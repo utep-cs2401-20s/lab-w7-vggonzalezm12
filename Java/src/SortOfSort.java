@@ -1,93 +1,63 @@
-public class SortOfSort {
+public class SortOfSort
+{
     // algorithm using counter and reset it every 2 moves
-    public static void sortOfSort(int[] arr) {
-        int begin = 0;
-        int end = arr.length -1;
+    private int [] arr;
+    private int length;
+    public SortOfSort( int [] arr)
+    {
+        this.arr = arr;
+    }
+
+    public void sortOfSort()
+    {
+        int indexMax;
         int counter = 0;
-        while (begin < end) {
+        int begin = 0; // beginning of the array
+        int end = arr.length-1; // end of the array
 
-            if (counter < 2)  {
-                for (int i = begin; i < arr[end]; ++i) {
-                    // Find index of smallest remaining element
-                    int indexMax = i;
-                    for (int j = i + 1; j < arr[end]; ++j) {
-                        if (arr[j] > arr[indexMax]) {
-                            indexMax = j;
-                        }
+        while (begin < end)   // take into account to only use the elements of the array that are not ordered (between begin and end)
+                            // help provided by Antoine during Office hours and at Lab
+        {
+
+            if(counter < 2)
+            {
+                indexMax = begin;
+                // Find max index of  elements
+                for (int i = begin; i <= end; i++)
+                    if (arr[i] >=  arr[indexMax])
+                    {
+                        indexMax = i;
                     }
-                    // Swap numbers[arr.length-1] and numbers[indexMax]
-                    int temp = arr[arr.length - 1 - i];
-                    arr[arr.length - 1 - i] = arr[indexMax];
-                    arr[indexMax] = temp;
-                    end--;
-                }
+            // Swap arr[end position of the array] and arr[indexMax]
+                int temp = arr[indexMax];
+                arr[indexMax] = arr[end];
+                arr[end] = temp;
+                counter++;
+                end --;
+            }
+            else
+            {
+                indexMax = begin;
+                // Find max index of  elements
+                for (int i = begin; i <= end; i++)
+                    if (arr[i] >=  arr[indexMax])
+                    {
+                        indexMax = i;
+                    }
+            // Swap arr[end position of the array] and arr[indexMax]
+                int temp = arr[indexMax];
+                arr[indexMax] = arr[begin];
+                arr[begin] = temp;
+                begin++;
+                counter++;
             }
 
-            if (counter == 2) {
-                for (int i = 0; i < 2; ++i) {
-                    // Find index of smallest remaining element
-                    int indexMax = i;
-                    for (int j = i + 1; j < arr.length; ++j) {
-                        if (arr[j] > arr[indexMax]) {
-                            indexMax = j;
-                        }
-                    }
-
-                    // Swap numbers[arr.length-1] and numbers[indexMax]
-                    int temp = arr[i];
-                    arr[i] = arr[indexMax];
-                    arr[indexMax] = temp;
-                    begin++;
-                }
+            if (counter == 4)
+            {
+                counter = 0; // reset
             }
+
         }
     }
 
-
-
-// recursive option
-    
-    public static void sortOfSortR(int[] arr, int  counter)
-    {
-
-            if (counter == 0) {
-                for (int i = 0; i < 2; ++i) {
-                    // Find index of smallest remaining element
-                    int indexMax = i;
-                    for (int j = i + 1; j < arr.length; ++j) {
-                        if (arr[j] > arr[indexMax]) {
-                            indexMax = j;
-                        }
-                    }
-                    // Swap numbers[arr.length-1] and numbers[indexMax]
-                    int temp = arr[arr.length - 1 - i];
-                    arr[arr.length - 1 - i] = arr[indexMax];
-                    arr[indexMax] = temp;
-
-                }
-                sortOfSortR(arr, 2);
-            }
-
-            if (counter == 2)
-            {
-                for (int i = 0; i < 2; ++i)
-                {
-                    // Find index of smallest remaining element
-                    int indexMax = i;
-                    for (int j = i + 1; j < arr.length; ++j)
-                    {
-                        if (arr[j] > arr[indexMax])
-                        {
-                            indexMax = j;
-                        }
-                    }
-
-                    // Swap numbers[arr.length-1] and numbers[indexMax]
-                    int temp = arr[i];
-                    arr[i] = arr[indexMax];
-                    arr[indexMax] = temp;
-                }
-                sortOfSortR(arr, 0);
-            }
-    }
 }
